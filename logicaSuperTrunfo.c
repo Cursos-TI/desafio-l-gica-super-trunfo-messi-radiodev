@@ -122,6 +122,7 @@ int main () {
         pontosCartas2 += 3;
     }     
     
+    // fim do jogo indicando o vencedor
     if (pontosCartas1 > pontosCartas2) {
         printf ("Na Soma Total dos Pontos a cidade %s ganhou!" , nomeDaCidade1);
     } else {
