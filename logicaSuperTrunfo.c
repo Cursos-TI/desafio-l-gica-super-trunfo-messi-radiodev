@@ -1,13 +1,14 @@
 #include <stdio.h>
 
 int main () {
-    
+
     //declaracao das variaveis
     char estado1, estado2, codigo1 [3], codigo2 [3], nomeDaCidade1 [50], nomeDaCidade2 [50];
-    int pontosTuristicos1, pontosTuristicos2, compararPopulacoes, compararPontosTuristicos, compararArea, compararPib, compararDensidadePopulacional, compararPibPerCapita, compararSuperPoder, pontosCartas1 = 0, pontosCartas2 = 0, atributoEscolhido;
-    float areaEmKm1, areaEmKm2, pib1, pib2, densidadePopulacional1, densidadePopulacional2, pibPerCapita1, pibPerCapita2, superPoder1, superPoder2, inversoDensidadePopulacional1, inversoDensidadePopulacional2;
+    int pontosTuristicos1, pontosTuristicos2, compararPopulacoes, compararPontosTuristicos, compararArea, compararPib, compararDensidadePopulacional, compararPibPerCapita, compararSuperPoder, atributoEscolhido1, atributoEscolhido2;
+    float areaEmKm1, areaEmKm2, pib1, pib2, densidadePopulacional1, densidadePopulacional2, pibPerCapita1, pibPerCapita2, superPoder1, superPoder2, inversoDensidadePopulacional1, inversoDensidadePopulacional2, pontosCartas1 = 0, pontosCartas2 = 0;
     unsigned long int populacao1, populacao2;
-    
+
+
     //dados de entrada, usuario atribui valor as variaveis
     printf ("Digite uma letra de A a H para representar o estado da carta 1: \n");
     scanf (" %c", &estado1);
@@ -41,79 +42,97 @@ int main () {
     //calculo sendo realizado após a leitura dos dados inseridos pelo usuario
     densidadePopulacional1 = (float) populacao1 / areaEmKm1;
     densidadePopulacional2 = (float) populacao2 / areaEmKm2;
-    inversoDensidadePopulacional1 = (float) 1.0f / densidadePopulacional1;
-    inversoDensidadePopulacional2 = (float) 1.0f / densidadePopulacional2;
-    pibPerCapita1 = (float) pib1 / populacao1;
-    pibPerCapita2 = (float) pib2 / populacao2;
-    superPoder1 = (float) (populacao1 + pontosTuristicos1 + areaEmKm1 + pib1 + inversoDensidadePopulacional1 + pibPerCapita1);
-    superPoder2 = (float) (populacao2 + pontosTuristicos2 + areaEmKm2 + pib2 + inversoDensidadePopulacional2 + pibPerCapita2);
+    inversoDensidadePopulacional1 = 1.0f / densidadePopulacional1;
+    inversoDensidadePopulacional2 = 1.0f / densidadePopulacional2;
 
-    //formulas de comparação
-    compararPopulacoes = populacao1 > populacao2;
-    compararArea = areaEmKm1 > areaEmKm2;
-    compararPib = pib1 > pib2;
-    compararPontosTuristicos = pontosTuristicos1 > pontosTuristicos2;
-    compararDensidadePopulacional = densidadePopulacional1 < densidadePopulacional2; // menor valor vence
-    compararPibPerCapita = pibPerCapita1 > pibPerCapita2;
-    compararSuperPoder = superPoder1 > superPoder2;
-
-   // tela de interação com o usuario
+    // inicio do jogo
     printf ("*** Bem-vindo ao jogo Super Trunfo! ***\n\n");
-    printf ("Qual atributo você gostaria de comparar com as cartas do adversário? \n 1 - População \n 2 - Area \n 3 - PIB \n 4 - Pontos Turisticos \n 5 - Densidade Populacional \n");
-    scanf ("%d", &atributoEscolhido);
 
-    // resultado da interação do usuario
-    switch (atributoEscolhido) {
+
+    // primeira escolha de atributos
+    printf ("Qual o primeiro atributo você gostaria de comparar com as cartas do adversário? \n 1 - População \n 2 - Area \n 3 - PIB \n 4 - Pontos Turisticos \n 5 - Densidade Populacional \n");
+    scanf ("%d", &atributoEscolhido1);
+
+    // segunda escolha de atributos
+    printf ("Qual o segundo atributo você gostaria de comparar com as cartas do adversário? (NÃO PODE SER IGUAL AO PRIMEIRO) \n 1 - População \n 2 - Area \n 3 - PIB \n 4 - Pontos Turisticos \n 5 - Densidade Populacional \n");
+    scanf ("%d", &atributoEscolhido2);
+
+    // condição para verificar se os atributos escolhidos são iguais
+    if (atributoEscolhido1 == atributoEscolhido2)
+    {
+        printf ("Erro! Os atributos escolhidos devem ser diferentes! O programa será encerrado!\n");
+        return 1; // indicando erro
+    }
+    
+
+    // switch atributo 1
+    switch (atributoEscolhido1) {
         case 1:
-            if (populacao1 == populacao2) {
-                printf ("Empate entre as cidades! População da carta 1: %lu e da carta 2: %lu\n", populacao1, populacao2);
-            } else if (compararPopulacoes) {
-                printf ("A Cidade %s vence! População da carta 1: %lu e da carta 2: %lu\n", nomeDaCidade1, populacao1, populacao2);
-            } else {
-                printf ("A Cidade %s vence! População da carta 1: %lu e da carta 2: %lu\n", nomeDaCidade2, populacao1, populacao2);
-            }
-            break;
+        pontosCartas1 += populacao1;
+        pontosCartas2 += populacao2;
+        break;
         case 2:
-            if (areaEmKm1 == areaEmKm2) {
-                printf ("Empate entre as cidades! Área em Km da carta 1: %.2f e da carta 2: %.2f\n", areaEmKm1, areaEmKm2);
-            } else if (compararArea) {
-                printf ("A Cidade %s vence! Área em Km da carta 1: %.2f e da carta 2: %.2f\n", nomeDaCidade1, areaEmKm1, areaEmKm2);
-            } else {
-                printf ("A Cidade %s vence! Área em Km da carta 1: %.2f e da carta 2: %.2f\n", nomeDaCidade2, areaEmKm1, areaEmKm2);
-            }
-            break;
+        pontosCartas1 += areaEmKm1;
+        pontosCartas2 += areaEmKm2;
+        break;
         case 3:
-            if (pib1 == pib2) {
-                printf ("Empate entre as cidades! PIB da carta 1: %.2f e da carta 2: %.2f\n", pib1, pib2);
-            } else if (compararPib) {
-                printf ("A Cidade %s vence! PIB da carta 1: %.2f e da carta 2: %.2f\n", nomeDaCidade1, pib1, pib2);
-            } else {
-                printf ("A Cidade %s vence! PIB da carta 1: %.2f e da carta 2: %.2f\n", nomeDaCidade2, pib1, pib2);
-            }
-            break;
+        pontosCartas1 += pib1;
+        pontosCartas2 += pib2;
+        break;
         case 4:
-            if (pontosTuristicos1 == pontosTuristicos2) {
-                printf ("Empate entre as cidades! Nº de Pontos Turísticos da carta 1: %d e da carta 2: %d\n", pontosTuristicos1, pontosTuristicos2);
-            } else if (compararPontosTuristicos) {
-                printf ("A Cidade %s vence! Nº de Pontos Turísticos da carta 1: %d e da carta 2: %d\n", nomeDaCidade1, pontosTuristicos1, pontosTuristicos2);
-            } else {
-                printf ("A Cidade %s vence! Nº de Pontos Turísticos da carta 1: %d e da carta 2: %d\n", nomeDaCidade2, pontosTuristicos1, pontosTuristicos2);
-            }
-            break;
+        pontosCartas1 += pontosTuristicos1;
+        pontosCartas2 += pontosTuristicos2;
+        break;
         case 5:
-            if (densidadePopulacional1 == densidadePopulacional2) {
-                printf ("Empate entres as cidades! Densidade Demográfica da carta 1: %.2f e da carta 2: %.2f\n", densidadePopulacional1, densidadePopulacional2);
-            } else if (compararDensidadePopulacional) {
-                printf ("A Cidade %s vence! Densidade Demográfica da carta 1: %.2f e da carta 2: %.2f\n", nomeDaCidade1, densidadePopulacional1, densidadePopulacional2);
-            } else {
-                printf ("A Cidade %s vence! Densidade Demográfica da carta 1: %.2f e da carta 2: %.2f\n", nomeDaCidade2, densidadePopulacional1, densidadePopulacional2);
-            }
-            break;
+        pontosCartas1 += inversoDensidadePopulacional1;
+        pontosCartas2 += inversoDensidadePopulacional2;
+        break;
         default:
-            printf ("Opção inválida!\n");
-            break;
+        printf ("Erro! O atributo escolhido não existe! O programa será encerrado!\n");
+        return 1; 
+    }
+
+    // switch atributo 2
+    switch (atributoEscolhido2) {
+        case 1:
+        pontosCartas1 += populacao1;
+        pontosCartas2 += populacao2;
+        break;
+        case 2:
+        pontosCartas1 += areaEmKm1;
+        pontosCartas2 += areaEmKm2;
+        break;
+        case 3:
+        pontosCartas1 += pib1;
+        pontosCartas2 += pib2;
+        break;
+        case 4:
+        pontosCartas1 += pontosTuristicos1;
+        pontosCartas2 += pontosTuristicos2;
+        break;
+        case 5:
+        pontosCartas1 += inversoDensidadePopulacional1;
+        pontosCartas2 += inversoDensidadePopulacional2;
+        break;
+        default:
+        printf ("Erro! O atributo escolhido não existe! O programa será encerrado!\n");
+        return 1; 
+    }
+
+    // informar os valores
+    printf ("\nSoma dos dois atributos:\n");
+    printf ("Carta 1: %.2f\n", pontosCartas1);
+    printf ("Carta 2: %.2f\n", pontosCartas2);
+
+    // resultado e vencedor
+
+    if (pontosCartas1 > pontosCartas2) {
+        printf("\n*** A cidade %s VENCEU!!! ***\n", nomeDaCidade1);
+    } else if (pontosCartas1 < pontosCartas2) {
+        printf("\n*** A cidade %s VENCEU!!! ***\n", nomeDaCidade2);
+    } else {
+        printf("\n*** Ocorreu um EMPATE entre as cidades %s e %s! ***\n", nomeDaCidade1, nomeDaCidade2);
     }
 
     return 0;
-
 }
